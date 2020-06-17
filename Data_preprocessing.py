@@ -16,7 +16,7 @@ def remove_wordpress_tags(text):
 def remove_functions(text):
     return round_brackets.sub('', text)
 
-def clean_the_content(text):
+def clean_the_question_content(text):
     text = remove_html_tags(text)
     text = remove_wordpress_tags(text)
     text = text.lower().strip()
@@ -24,9 +24,13 @@ def clean_the_content(text):
     text = re.sub(r'[^a-z0-9\s]', '', text)
     for i in range(1,10):
         text = remove_functions(text)
+    return text
 
-    # text = text.lower().strip()
-
+def clean_the_answer_content(text):
+    text = remove_html_tags(text)
+    text = remove_wordpress_tags(text)
+    for i in range(1,10):
+        text = remove_functions(text)
     return text
 
 # my_text = "<!-- wp:paragraph -->\n<p>You are breaking the law if you help, suggest or encourage a public servant to commit the crimes of accepting money or gifts in addition to their salary or property from business associates, even if the crime was not successfully committed. You can be sent to jail for a period of 3 to 7 years and will also have to pay a fine.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p><strong>Example</strong>: Rajesh, Ravi's cousin offers Mukesh (a public servant) a new house in return for appointing Ravi to the post of junior Railway officer. Even if Ravi does not get the post, Rajesh has \\u201cabetted\\u201d or helped Mukesh break the law.</p>\n<!-- /wp:paragraph -->"
@@ -47,17 +51,13 @@ def DataPrepare():
             for item in my_data:
                 my_dict = {'question': '', 'answer': ''}
                 
-                my_dict['question'] = clean_the_content(str("what is ")+item['title'])
-
-
-
+                my_dict['question'] = clean_the_question_content(str("what is ")+item['title'])
                 answer = item['content:encoded']
-                answer = clean_the_content(answer)
+                answer = clean_the_answer_content(answer)
 
                 my_dict['answer'] = answer
 
                 my_list.append(my_dict)
-            
                 # print(my_list)
         
     with open('my_data.json', 'a+') as output_file:

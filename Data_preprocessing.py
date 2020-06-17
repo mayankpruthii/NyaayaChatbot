@@ -35,8 +35,6 @@ def clean_the_content(text):
 
 def DataPrepare():
 
-    my_dict = {'slug': '', 'question': '', 'answer': ''}
-
     my_list = []
 
     with open("./JSONData/myData.json") as json_file:

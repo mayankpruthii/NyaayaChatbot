@@ -37,30 +37,47 @@ def clean_the_answer_content(text):
 # ans = remove_tags(my_text)
 # print(ans)
 
-def DataPrepare():
+def DataPrepare(jsonFile = "question_answers.json"):
 
     my_list = []
 
-    with open("./JSONData/myData.json") as json_file:
+    with open("./JSONData/"+jsonFile) as json_file:
         json_data = json.load(json_file)
         
-        for data in json_data:
-            my_data = data['rss']['channel']['item']
-            # print(my_data)
+        json_data = json_data['rss']['channel']['item']
 
-            for item in my_data:
-                my_dict = {'question': '', 'answer': ''}
-                
-                my_dict['question'] = clean_the_question_content(str("what is ")+item['title'])
-                answer = item['content:encoded']
+        # for data in json_data:
+        #     my_data = data['rss']['channel']['item']
+        #     # print(my_data)
+
+        for item in json_data:
+            my_dict = {'question': '', 'answer': ''}
+            
+            question = item['title']
+            answer = item['content:encoded']
+
+            if question == None or answer == None:
+                continue
+
+            try:
+                question = clean_the_question_content(question)
+            except:
+                pass
+            
+            my_dict['question'] = question
+            
+            
+            try:
                 answer = clean_the_answer_content(answer)
+            except:
+                pass
 
-                my_dict['answer'] = answer
+            my_dict['answer'] = answer
 
-                my_list.append(my_dict)
-                # print(my_list)
+            my_list.append(my_dict)
+            # print(my_list)
         
-    with open('my_data.json', 'a+') as output_file:
+    with open('my_data1.json', 'a+') as output_file:
 
         json.dump(my_list, output_file)
 
@@ -68,4 +85,4 @@ def DataPrepare():
 
 
 if __name__ == '__main__':
-    DataPrepare()
+    DataPrepare("question_answers.json")

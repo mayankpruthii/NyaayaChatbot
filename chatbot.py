@@ -29,8 +29,8 @@ def printAnswer(question_embedding, sentence_embedding, df, sentences, question)
             max_sim = sim
             index_sim = index
 
-    if max_sim < 0.81:
-        print("We'll get back to you soon!")
+    if max_sim < 0.8:
+        return("We'll get back to you soon!")
     else:
         print("\n")
         print("Question:", question)
@@ -39,6 +39,8 @@ def printAnswer(question_embedding, sentence_embedding, df, sentences, question)
         print("\n")
         print("Answer:", df.iloc[index_sim,0])
         print(df.iloc[index_sim,1])
+        return(df.iloc[index_sim,1])
+        
 
 def questions_embedding_list(df):
     bc = BertClient(check_length=False)
@@ -63,9 +65,10 @@ def get_answer(question):
     # sio = StringIO(binary_data)
     df_question_bert_embeddings = pickle.loads(binary_data)
 
-    printAnswer(question_embedding, df_question_bert_embeddings, df, df_questions, question)
+    Answer = printAnswer(question_embedding, df_question_bert_embeddings, df, df_questions, question)
+    return Answer
 
 if __name__ == '__main__':
     # df = read_data()
     # questions_embedding_list(df)
-    get_answer("laws on covid 19")
+    get_answer("what do you do?")

@@ -71,4 +71,5 @@ def get_answer(question):
 if __name__ == '__main__':
     # df = read_data()
     # questions_embedding_list(df)
-    get_answer("what do you do?")
+    text = input("Please enter your Query: ")
+    get_answer(text)

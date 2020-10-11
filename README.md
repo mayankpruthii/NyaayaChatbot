@@ -33,7 +33,7 @@ python chatbot.py
 It will ask you query. Ask your question and it will be answered.!
 
 
-## Ask me Questions like
+## Ask the bot Questions like
 
 * Is gender based discrimination the same as sexual harassment?
 

@@ -35,6 +35,6 @@ It will ask you query. Ask your question and it will be answered.!
 
 ## Ask the bot Questions like
 
-* Is gender based discrimination the same as sexual harassment?
+* Who sits on a local complaints committee?
 
 * Can the landlord increase my rent?

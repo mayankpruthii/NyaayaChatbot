@@ -42,47 +42,35 @@ def DataPrepare(jsonFile = "question_answers.json"):
     my_list = []
 
     with open("./JSONData/"+jsonFile) as json_file:
-        json_data = json.load(json_file)
-        
+        json_data = json.load(json_file)        
         json_data = json_data['rss']['channel']['item']
-
         # for data in json_data:
         #     my_data = data['rss']['channel']['item']
         #     # print(my_data)
-
         for item in json_data:
             my_dict = {'question': '', 'answer': ''}
-            
             question = item['title']
             answer = item['content:encoded']
-
             if question == None or answer == None:
                 continue
-
             try:
                 question = clean_the_question_content(question)
             except:
-                pass
-            
-            my_dict['question'] = question
-            
-            
+                pass        
+            my_dict['question'] = question           
             try:
                 answer = clean_the_answer_content(answer)
             except:
                 pass
-
             my_dict['answer'] = answer
 
             my_list.append(my_dict)
             # print(my_list)
         
     with open('my_data1.json', 'a+') as output_file:
-
         json.dump(my_list, output_file)
-
+        
     print(len(my_list))
-
-
+    
 if __name__ == '__main__':
     DataPrepare("question_answers.json")
